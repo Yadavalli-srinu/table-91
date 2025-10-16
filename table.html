@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,tr,th,td{
+            border-collapse: collapse;
+            border: 1px solid black;
+            padding: 7.5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="name" placeholder="Enter Your Name">
+        <input type="text" id="dept" placeholder="Enter Your Dept">
+        <input type="text" id="cgpa" placeholder="Enter Your Cgpa">
+        <button id="btn">Add</button>
+    </div>
+    <div>
+        <table id="table">
+
+        </table>
+    </div>
+    <script>
+        let table=document.getElementById('table')
+        let btn=document.getElementById("btn")
+        let name=document.getElementById("name")
+        let dept=document.getElementById("dept")
+        let cgpa=document.getElementById("cgpa")
+
+        function getdata(){
+            let data=localStorage.getItem("data")
+            if(data==null){
+                return []
+            }else{
+                return JSON.parse(data)
+            }
+        }
+        
+        let arr=getdata()
+        
+        
+
+        let tr=document.createElement("tr")
+        table.appendChild(tr)
+
+        let th1=document.createElement("th")
+        th1.textContent="NAME"
+        tr.appendChild(th1)
+
+        let th2=document.createElement("th")
+        th2.textContent="DEPT"
+        tr.appendChild(th2)
+
+        let th3=document.createElement("th")
+        th3.textContent="CGPA"
+        tr.appendChild(th3)
+
+        for(let i of arr){
+            createRowData(i.name,i.dept,i.cgpa)
+        }
+
+        function createRowData(name,dept,cgpa){
+        let tr=document.createElement("tr")
+        table.appendChild(tr) 
+
+        let td1=document.createElement("td")
+        td1.textContent=name
+        tr.appendChild(td1)
+
+        let td2=document.createElement("td")
+        td2.textContent=dept
+        tr.appendChild(td2)
+
+        let td3=document.createElement("td")
+        td3.textContent=cgpa
+        tr.appendChild(td3)
+        }
+       
+        btn.onclick=function(){
+            createRowData(name.value,dept.value,cgpa.value)
+            let newdata={
+                name:name.value,
+                dept:dept.value,
+                cgpa:cgpa.value
+            }
+            arr.push(newdata)
+            localStorage.setItem("data",JSON.stringify(arr))
+            console.log(arr)
+
+        }
+
+    </script>
+</body>
+</html>
